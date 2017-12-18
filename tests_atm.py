@@ -74,6 +74,7 @@ class WrongPin(unittest.TestCase):
                 with self.assertRaises(AttemptsOver) as cm:
                     self.atm.enter_pin(111)
 
+
 class TestCheckBalance(unittest.TestCase):
     
     def setUp(self):
@@ -83,6 +84,7 @@ class TestCheckBalance(unittest.TestCase):
         """ Check balance without pin"""
         with self.assertRaises(EnterPin) as cm:
             self.atm.check_balance()
+
 
 class TestRiseMoney(unittest.TestCase):
 
@@ -99,35 +101,36 @@ class TestRiseMoney(unittest.TestCase):
     @unittest.skip("Bug #002")
     def test_rise_money_without_pin(self):
         """ Doesn't add money to the Atm without pin
-            1.Rise money 1000000"""
+            1.Rise money 1000000
+            2.Enter correct pin """
         with self.assertRaises(EnterPin) as cm:
             self.atm.rise_money(1000000)
 
-    @unittest.skip("Bug #003  ATM doesn't rise")
+    @unittest.skip("Bug #003")
     def test_rise_money_and_check_balance(self):
-        """ Add money to the Atm and check balance 10000
-            1.enter correct pin       
+        """ Add money to the Atm and check balance
+            1.Enter correct pin       
             2.Rise money 10000
-            3.Check the balance.Balance should be 13000"""
+            3.Enter correct pin
+            3.Check the balance.Balance should be 13000 """
         self.atm.enter_pin(777)
         self.atm.rise_money(3000)
+        self.atm.enter_pin(777)
         self.assertEqual(13000,self.atm.check_balance())
 
+    @unittest.skip("Bug #004")
     def test_rise_money_get_money_check_balance(self):
         """ Add some money to the ATM, get money and check balance
             1.Enter correct pin
-            2.Rise money 1000000
-            3.Get 500000
-            4.Balance 90000"""
+            2.Rise money 3000
+            3.Enter correct pin
+            4.Get money 1000
+            5.Check the balance.Balance should be 8000 """
         self.atm.enter_pin(777)
         self.atm.rise_money(3000)
         self.atm.enter_pin(777)
         self.atm.get_money(1000)
-        self.assertEqual(3000,self.atm.check_balance())  
-
-
-
-
+        self.assertEqual(8000,self.atm.check_balance())  
 
 
 if __name__ == '__main__':
