@@ -16,3 +16,10 @@ class EnterPin(Exception):
 
 class IncorrectPin(Exception):
     pass
+
+
+class MinusGetMoney(Exception):
+    pass
+
+class MinusRiseMoney(Exception):
+    pass
