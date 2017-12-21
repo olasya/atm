@@ -37,8 +37,11 @@ class CheckEnterPin(unittest.TestCase):
             try: 
                 self.atm.enter_pin(111)
             except IncorrectPin:
-                with self.assertRaises(AttemptsOver) as cm:
+                try: 
                     self.atm.enter_pin(111)
+                except IncorrectPin:
+                    with self.assertRaises(AttemptsOver) as cm:
+                        self.atm.enter_pin(111)
 
     @unittest.skip(" Bug 222")
     def test_wrong_two_times_last_right(self):
@@ -63,17 +66,17 @@ class TestGetMoney(unittest.TestCase):
         self.atm = Atm()
 
     def test_atm_gives_money_min1(self):
-        """ money are present in atm
+        """ money are present in atm and get_money(-1)
             1.enter correct pin
             2.get -1
-            3.Recieve message "Number can't be minus!!!" """ 
+            3.Recieve message "Number can't be negative!!!" """ 
         self.atm.enter_pin(777)    
         with self.assertRaises(MinusGetMoney) as cm:
             self.atm.get_money(-1)
 
 
     def test_atm_gives_money_0(self):
-        """ money are present in atm
+        """ money are present in atm and get_money(0)
             1.enter correct pin
             2.get 0
             3.check balance """ 
@@ -82,7 +85,7 @@ class TestGetMoney(unittest.TestCase):
         self.assertEqual(10000, self.atm.check_balance())
 
     def test_atm_gives_money_1(self):
-        """ money are present in atm
+        """ money are present in atm and get_money(1)
             1.enter correct pin
             2.get 1
             3.check balance """ 
@@ -92,7 +95,7 @@ class TestGetMoney(unittest.TestCase):
 
           
     def test_atm_gives_money_5000(self):
-        """ money are present in atm
+        """ money are present in atm and get_money(5000)
             1.enter correct pin
             2.get 5000
             3.check balance """ 
@@ -101,9 +104,9 @@ class TestGetMoney(unittest.TestCase):
         self.assertEqual(5000, self.atm.check_balance())
 
     def test_atm_gives_money_10000(self):
-        """ money are present in atm
+        """ money are present in atm and get_money(10000)
             1.enter correct pin
-            2.get 5000
+            2.get 10000
             3.check balance """ 
         self.atm.enter_pin(777)
         self.atm.get_money(10000)      
@@ -156,6 +159,7 @@ class TestCheckBalance(unittest.TestCase):
 
 class TestRiseMoney(unittest.TestCase):
 
+
     def setUp(self):
         self.atm = Atm()
 
@@ -166,7 +170,7 @@ class TestRiseMoney(unittest.TestCase):
         self.atm.enter_pin(777)
         self.assertEqual(1010000, self.atm.rise_money(1000000))  
 
-    @unittest.skip("Bug #002")
+    # @unittest.skip("Bug #002")
     def test_rise_money_without_pin(self):
         """ Doesn't add money to the Atm without pin
             1.Rise money 1000000
