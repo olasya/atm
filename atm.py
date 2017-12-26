@@ -6,12 +6,25 @@ from atm_exceptions import *
 
 class Atm(object):
     __atm_balance = 10000
-    __attempts = 2
+    __attempts = 3
     __client_can_get_money = False
+    # __rise = False
+
+
 
     def _rise_money(self, rise_money):
         """Method to add some money to the ATM"""
         return self.__atm_balance + rise_money
+
+    # def rise_money(self, rise_money):
+    #     """Method to add some money to the ATM"""
+    #     if self.__rise:
+    #         if rise_money < 0:
+    #             raise MinusRiseMoney("Number can't be negative!!")  
+    #         else:
+    #             self.__atm_balance = self.__atm_balance + rise_money
+    #             return rise_money
+    #     raise EnterPin("Enter pin first!!!")
 
     def enter_pin(self, pin):
         """Method to check pin"""
@@ -31,6 +44,9 @@ class Atm(object):
     def get_money(self, money):
         """Method to get some money for sweets from the ATM"""
         if self.__client_can_get_money:
+            if money < 0:
+                raise MinusGetMoney("Number can't be negative!!!")
+                
             if money <= self.__atm_balance:
                 self.__atm_balance = self.__atm_balance - money
                 return money

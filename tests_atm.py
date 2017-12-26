@@ -43,7 +43,7 @@ class CheckEnterPin(unittest.TestCase):
                     with self.assertRaises(AttemptsOver) as cm:
                         self.atm.enter_pin(111)
 
-    @unittest.skip(" Bug 222")
+    # @unittest.skip(" Bug 222")
     def test_wrong_two_times_last_right(self):
         """ two times wrong ,last right 
             1.enter incorrect pin(111)
@@ -163,14 +163,7 @@ class TestRiseMoney(unittest.TestCase):
     def setUp(self):
         self.atm = Atm()
 
-    def test_rise_money(self):
-        """ Add some money to the ATM
-            1.Enter correct pin
-            2.Rise money 1000000"""
-        self.atm.enter_pin(777)
-        self.assertEqual(1010000, self.atm.rise_money(1000000))  
-
-    # @unittest.skip("Bug #002")
+    @unittest.skip("Bug #002")
     def test_rise_money_without_pin(self):
         """ Doesn't add money to the Atm without pin
             1.Rise money 1000000

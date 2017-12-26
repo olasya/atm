@@ -21,5 +21,6 @@ class IncorrectPin(Exception):
 class MinusGetMoney(Exception):
     pass
 
+
 class MinusRiseMoney(Exception):
     pass
